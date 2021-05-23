@@ -9,7 +9,6 @@ html {
     display: grid;
     justify-items: center;
     align-items: center;
-    background-color: #3a3a3a;
   }
   
   #main-holder {
@@ -78,4 +77,73 @@ html {
     background-color: #3a3a3a;
     cursor: pointer;
     outline: none;
+  }
+  div img {
+    padding-left: 100px;
+  }
+  
+  span#idWine {
+    border: 1px solid gray;
+    border-radius: 10px;
+    background-color: gray;
+    padding: 3px 10px;
+    color: white;
+  
+  }
+  
+  ul.wineDescription  > li {
+    list-style-type: none;
+    padding-bottom: 5px;
+    margin-top: 5px;
+  }
+  
+  li#nameWine {
+    color: purple;
+  }
+  
+  a.title {
+    text-decoration: none;
+    color: purple;
+  }
+  
+  
+  .menu-item:hover {
+    color: rgb(210, 5, 218);
+  }
+  
+  a.menu-item {
+    color: black;
+    text-decoration: none;
+  }
+  
+  ul.list-group {
+    cursor: pointer;
+  }
+  
+  .list-group-item.active {
+    background-color: purple;
+    color: white;
+    border-color: purple;
+    font-weight: bold;
+  }
+  
+  footer {
+      text-align: center;
+      border-top: 1px solid silver;
+      margin: 5px 0;
+  }
+  
+  
+  /* Wine tabs */
+  [data-tab-content] {
+    display: none;
+  }
+  
+  .active[data-tab-content]{
+    display: block;
+  }
+
+  
+  #wine {
+    display: none;
   }
