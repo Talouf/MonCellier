@@ -24,6 +24,7 @@ const likeButton = document.getElementById("likeButton");
 const createComment = document.getElementById("createComment");
 const newComment = document.getElementById("newComment");
 const description = document.getElementById('description');
+const disconnect = document.getElementById('disconnect');
 
 let searchTerm = '';
 let wine;
@@ -302,5 +303,9 @@ async function checkLogged() {
 checkLogged();
 
 
+disconnect.addEventListener('click', (e) => {
+  localStorage.clear()
+  location.reload();
+});
 // TO DO  : SHOW DISCONNECT BUTTON AFTER LOGIN + LOGOUT
 
