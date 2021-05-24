@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/oldstyle.css">
+    <script src="https://kit.fontawesome.com/f07e0ab41c.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>MonCellier</title>
+</head>
+
+<body>
+    <header class="container-fluid d-flex flex-wrap justify-content-center">
+        <div class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto">
+            <a href="index.html" class="title">
+                <h1 class="title">MonCellier</h1>
+            </a>
+        </div>
+        <main id="main-holder">
+            <h1 id="login-header">Login</h1>
+
+            <div id="login-error-msg-holder">
+                <p id="login-error-msg">Invalid username <span id="error-msg-second-line">and/or password</span></p>
+            </div>
+
+            <form id="login-form">
+                <input type="text" name="login" id="username-field" class="login-form-field" placeholder="Login">
+                <input type="password" name="pwd" id="password-field" class="login-form-field" placeholder="Password">
+                <input type="submit" value="Login" id="login-form-submit">
+            </form>
+
+        </main>
+        <main id="main-holder2" class="d-none">
+            <h1>DECONNECTION</h1>
+        </main>
+    </header>
+    <div class="container-fluid pt-2">
+        <div class="row">
+            <form id="search" action="#" method="get" class="col-3">
+                <input type="text" name="keyword" id="keyword" placeholder="Enter keyword here..." class="col-7 mx-2" />
+            </form>
+            <form id="frmFilter" action="#" method="get" class="col-6">
+                <select id="selectCountry">
+                </select>
+                <select id="selectYear">
+                </select>
+                <button id="btFilter" name="btFilter" type="button" class="btn btn-primary col-2">
+                    Filter
+                </button>
+                <button id="clearFilter" class="btn btn-close"></button>
+            </form>
+        </div>
+    </div>
+    <main class="container-fluid  py-4">
+        <div class="row d-flex flex-wrap">
+            <div class="col-3 md-3 mb-5">
+                <ul id="results" class="list-group">
+
+                </ul>
+            </div>
+            <div class="wineCard col row">
+                <div class="col">
+                    <img src="img/generic.jpg" id="pictureWine" alt="wine 1">
+                </div>
+                <div class="col align-self-center">
+                    <ul class="wineDescription">
+
+                        <li id="nameWine" class="h4 d-inline">
+                            <div>Name</div>
+                            <div class="value"></div>
+                        </li>
+                        <li id="grapesWine">
+                            <div>Grapes</div>
+                            <div class="value"></div>
+                        </li>
+                        <li id="yearWine">
+                            <div>Year</div>
+                            <div class="value"></div>
+                        </li>
+                        <li id="countryWine">
+                            <div>Country</div>
+                            <div class="value"></div>
+                        </li>
+                        <li id="regionWine">
+                            <div>Region</div>
+                            <div class="value"></div>
+                        </li>
+                        <li id="capacityWine">
+                            <div>Capacity</div>
+                            <div class="value"></div>
+                        </li>
+                        <li id="colorWine">
+                            <div>Color</div>
+                            <div class="value"></div>
+                        </li>
+                        <li id="priceWine">
+                            <div>Price</div>
+                            <div class="value"></div>
+                        </li>
+                    </ul>
+                    <div class="Btns">
+                        <input type="hidden" name="MAX_FILE_SIZE" value="200000">
+
+                        <input type="file" id="inpFile" class="inputfile" accept=".jpeg, .jpg">
+
+
+                        <button type="submit" id="btnUpload">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="Btns">
+                        <button id="likeButton" data-liked="false" name="likes" type="button" class="btn btn-danger">
+                            <i class="fas fa-heart" id="iconLike"> Like Wine</i>
+                        </button>
+
+                        <button id="btnNbLikes" name="btnNbLikes" type="button" class="btn btn-info">
+                            <i class="far fa-heart" id="nbLike"></i>
+                        </button>
+                    </div>
+                </div>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                            type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="commentsContainer-tab" data-bs-toggle="tab"
+                            data-bs-target="#commentsContainer" type="button" role="tab"
+                            aria-controls="commentsContainer" aria-selected="false">Comments</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+                            type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"></div>
+                    <div class="tab-pane fade" id="commentsContainer" role="tabpanel"
+                        aria-labelledby="commentsContainer-tab">
+                        <div id="comments">
+
+                        </div>
+                        <textarea name="commentaire" id="newComment" class="d-none"></textarea>
+                        <button type="button" id="createComment" class="btn btn-primary d-none">Button</button>
+                    </div>
+                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

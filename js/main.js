@@ -23,25 +23,21 @@ const closeLogin = document.getElementById("main-holder");
 const likeButton = document.getElementById("likeButton");
 const createComment = document.getElementById("createComment");
 const newComment = document.getElementById("newComment");
+const description = document.getElementById('description');
 
 let searchTerm = '';
 let wine;
 let filterWines = '';
 
-/**
- * 
- * TO DO
- * 
- * 
- * AJOUT COMMENTAIRE et LIKE après CONNEXION
- * AFFICHAGE DE VIN APRES SELECTION DANS LA LISTE
- * RENDRE LE TOUT DYNAMIQUE
- * CSS 
- */
+
 // API REQUEST
 const fetchWines = async (url) => {
   wine = await request(url)
 };
+async function request(url, params) {
+  const result = await fetch(`http://cruth.phpnet.org/epfc/caviste/public/index.php/api/${url}`, params)
+  return result.json();
+}
 
 // Wine List
 const showWinesList = async (loadwines = true) => {
@@ -54,7 +50,7 @@ const showWinesList = async (loadwines = true) => {
       .map(wines => (
 
         ` 
-          <li class="wine-item clickListWine" onclick="UpdateWineList(event)" data-id="${wines.id}" data-grapes="${wines.grapes}" data-year="${wines.year}" >
+          <li class="list-group-item clickListWine" onclick="UpdateWineList(event)" data-id="${wines.id}" data-grapes="${wines.grapes}" data-year="${wines.year}" >
             ${wines.name}
           </li>
         `
@@ -76,6 +72,7 @@ async function UpdateWineList(event) {
   capacityWine.querySelector(".value").innerHTML = currentWine.capacity
   colorWine.querySelector(".value").innerHTML = currentWine.color
   priceWine.querySelector(".value").innerHTML = currentWine.price
+  description.querySelector(".value").innerHTML = currentWine.description
   likeButton.setAttribute("data-id", currentWine.id)
   showWinesCom(currentWine.id);
   fetchNbLikes(currentWine.id);
@@ -84,7 +81,9 @@ async function UpdateWineList(event) {
 
 }
 
+// FUNCTION TO UPDATE LIKE STATUS
 async function updateLike(wineId) {
+  if (!localStorage.getItem("userid")) return;
   const result = await request(`users/${localStorage.getItem('userid')}/likes/wines`)
   const isLiked = result.some(r => r.id === wineId)
   likeButton.children[0].classList.toggle("fas", !isLiked)
@@ -99,7 +98,7 @@ searchInput.addEventListener('input', (e) => {
   showWinesList();
 });
 
-
+// FUNCTION TO POPULATE FILTER FORMS
 async function populateFilter() {
   await fetchWines("wines")
   const year = [...new Set(wine.map(w => w.year))].sort((a, b) => a - b)
@@ -126,7 +125,7 @@ async function populateFilter() {
 
 populateFilter();
 
-
+// button filter onclick
 btnFilter.addEventListener('click', () => {
   wine = wine.filter(w => w.year === selectYear.value)
   wine = wine.filter(w => w.country === selectCountry.value)
@@ -134,13 +133,14 @@ btnFilter.addEventListener('click', () => {
 
 });
 
+// button clear the filter onclick
 clearFilter.addEventListener('click', (e) => {
   showWinesList()
 
 });
 
 
-
+// Function to show wine comments
 const showWinesCom = async (id) => {
   const coms = await request(`wines/${id}/comments`);
   const userId = localStorage.getItem('userid')
@@ -164,10 +164,8 @@ const showWinesCom = async (id) => {
 };
 
 
-async function request(url, params) {
-  const result = await fetch(`http://cruth.phpnet.org/epfc/caviste/public/index.php/api/${url}`, params)
-  return result.json();
-}
+
+// Fetch the number of like for each wine clicked
 
 const fetchNbLikes = async (id) => {
   const likes = await request(`wines/${id}/likes-count`)
@@ -178,6 +176,9 @@ const fetchNbLikes = async (id) => {
   }
 
 }
+
+// Add a onlick function to the like button
+
 likeButton.addEventListener('click', async () => {
 
 
@@ -202,6 +203,8 @@ likeButton.addEventListener('click', async () => {
   }
 });
 
+// Function to create comments 
+
 createComment.addEventListener('click', async () => {
   const wineId = likeButton.dataset.id
   await request(`wines/${wineId}/comments`, {
@@ -216,6 +219,8 @@ createComment.addEventListener('click', async () => {
 
 })
 
+//Function to delete comments
+
 async function deleteComment(e) {
   const btn = e.target.closest(".btn")
   await request(`wines/${btn.dataset.wineid}/comments/${btn.dataset.id}`, {
@@ -226,6 +231,8 @@ async function deleteComment(e) {
   })
   showWinesCom(btn.dataset.wineid);
 }
+
+// Function to edit comments
 
 async function editComment(e) {
   const btn = e.target.closest(".btn")
@@ -243,10 +250,7 @@ async function editComment(e) {
 }
 
 // Log in
-
-
-// If auth -> show
-
+// function
 
 loginButton.addEventListener("click", (e) => {
   e.preventDefault();
@@ -279,6 +283,7 @@ loginButton.addEventListener("click", (e) => {
   })
 })
 
+// Function to check if the user is logged 
 async function checkLogged() {
   const storageString = localStorage.getItem('authString')
   if (!storageString) return
@@ -290,12 +295,12 @@ async function checkLogged() {
       closeLogin.classList.add('d-none')
       newComment.classList.remove('d-none')
       createComment.classList.remove('d-none')
-      //classlist remove (ou delete)
       return
     }
   }
 };
 checkLogged();
 
-//localStorage.clear   pour deco
+
+// TO DO  : SHOW DISCONNECT BUTTON AFTER LOGIN + LOGOUT
 
